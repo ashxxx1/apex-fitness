@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Fitness — Redefine Your Limits</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#ef4444;--dark:#0a0a0a;--card:#141414;--light:#fafafa;--gray:#666}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--dark);color:var(--light);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;width:100%;z-index:100;padding:1.2rem 4%;display:flex;justify-content:space-between;align-items:center;transition:background .3s}
+nav.scrolled{background:rgba(10,10,10,.95);backdrop-filter:blur(10px)}
+.logo{font-size:1.4rem;font-weight:900;letter-spacing:1px}
+.logo span{color:var(--red)}
+nav ul{list-style:none;display:flex;gap:2rem;align-items:center}
+nav a{color:var(--light);text-decoration:none;font-size:.85rem;opacity:.6;transition:opacity .3s;font-weight:500}
+nav a:hover{opacity:1}
+.join-btn{background:var(--red);color:#fff!important;opacity:1!important;padding:.6rem 1.5rem;border-radius:6px;transition:transform .3s,box-shadow .3s}
+.join-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(239,68,68,.4)}
+
+/* HERO */
+.hero{height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1400') center/cover;filter:brightness(.3)}
+.hero-content{position:relative;z-index:2;padding:0 6%;max-width:700px}
+.hero-tag{display:inline-block;background:var(--red);color:#fff;padding:.3rem 1rem;font-size:.7rem;font-weight:700;letter-spacing:2px;border-radius:4px;margin-bottom:1.5rem;text-transform:uppercase}
+.hero h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;line-height:1;letter-spacing:-1px;margin-bottom:1rem}
+.hero h1 .stroke{-webkit-text-stroke:2px var(--light);color:transparent}
+.hero p{color:var(--gray);font-size:1.05rem;line-height:1.7;margin-bottom:2rem;max-width:500px}
+.hero-btns{display:flex;gap:1rem}
+.btn-red{background:var(--red);color:#fff;border:none;padding:1rem 2.5rem;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .3s;text-decoration:none}
+.btn-red:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(239,68,68,.4)}
+.btn-outline{border:2px solid rgba(255,255,255,.2);color:#fff;background:transparent;padding:1rem 2.5rem;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .3s;text-decoration:none}
+.btn-outline:hover{border-color:var(--red);color:var(--red)}
+.scroll-indicator{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--gray);font-size:.7rem;letter-spacing:2px;animation:bob 2s infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* MARQUEE */
+.marquee{background:var(--red);padding:.8rem 0;overflow:hidden;white-space:nowrap}
+.marquee-inner{display:inline-flex;animation:scroll 20s linear infinite}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee-inner span{font-weight:900;font-size:.85rem;letter-spacing:3px;padding:0 2rem;text-transform:uppercase}
+
+/* PROGRAMS */
+.section{padding:6rem 4%}
+.section-header{text-align:center;margin-bottom:4rem}
+.section-header h2{font-size:2rem;font-weight:900;letter-spacing:-1px}
+.section-header h2 span{color:var(--red)}
+.programs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;max-width:1100px;margin:0 auto}
+.program{background:var(--card);border-radius:12px;padding:2rem;border:1px solid rgba(255,255,255,.05);transition:all .4s;cursor:pointer;position:relative;overflow:hidden;opacity:0;transform:translateY(30px)}
+.program.visible{opacity:1;transform:translateY(0)}
+.program::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--red);transform:scaleX(0);transition:transform .4s;transform-origin:left}
+.program:hover::before{transform:scaleX(1)}
+.program:hover{transform:translateY(-4px);border-color:rgba(239,68,68,.2)}
+.program-icon{font-size:2rem;margin-bottom:1rem}
+.program h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.program p{color:var(--gray);font-size:.85rem;line-height:1.6;margin-bottom:1rem}
+.program .tag{font-size:.7rem;color:var(--red);letter-spacing:1px;text-transform:uppercase;font-weight:600}
+
+/* STATS BAR */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;padding:4rem 6%;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);text-align:center}
+.stat h3{font-size:2.5rem;font-weight:900;color:var(--red)}
+.stat p{color:var(--gray);font-size:.8rem;letter-spacing:1px;margin-top:.3rem}
+
+/* COACHES */
+.coaches{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;max-width:1000px;margin:0 auto}
+.coach{text-align:center;opacity:0;transform:translateY(20px)}
+.coach.visible{opacity:1;transform:translateY(0)}
+.coach-img{width:140px;height:140px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--red);overflow:hidden}
+.coach-img img{width:100%;height:100%;object-fit:cover}
+.coach h4{font-weight:700;margin-bottom:.3rem}
+.coach .role{color:var(--red);font-size:.75rem;letter-spacing:1px;text-transform:uppercase}
+
+/* TESTIMONIALS */
+.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;max-width:1000px;margin:0 auto}
+.testimonial{background:var(--card);padding:2rem;border-radius:12px;border:1px solid rgba(255,255,255,.05);opacity:0;transform:translateY(20px)}
+.testimonial.visible{opacity:1;transform:translateY(0)}
+.testimonial .stars{color:var(--red);margin-bottom:1rem;font-size:.9rem}
+.testimonial p{color:var(--gray);font-size:.9rem;line-height:1.7;margin-bottom:1rem;font-style:italic}
+.testimonial .name{font-weight:700;font-size:.85rem}
+
+/* CTA */
+.cta-section{background:var(--red);text-align:center;padding:6rem 4%}
+.cta-section h2{font-size:2.5rem;font-weight:900;color:#fff;margin-bottom:1rem}
+.cta-section p{color:rgba(255,255,255,.8);margin-bottom:2rem}
+.cta-section .btn-white{background:#fff;color:var(--red);border:none;padding:1rem 3rem;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;transition:transform .3s}
+.cta-section .btn-white:hover{transform:translateY(-2px)}
+
+footer{text-align:center;padding:3rem;color:var(--gray);font-size:.8rem}
+
+@media(max-width:768px){
+  nav ul{display:none}
+  .stats-bar{grid-template-columns:repeat(2,1fr);gap:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="logo">APEX<span>FIT</span></div>
+  <ul>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#coaches">Coaches</a></li>
+    <li><a href="#" class="join-btn">JOIN NOW</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🔥 #1 Fitness Studio 2026</div>
+    <h1>REDEFINE<br><span class="stroke">YOUR LIMITS</span></h1>
+    <p>Where elite training meets community. Push beyond what you thought possible with world-class coaches and cutting-edge programs.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-red">START FREE TRIAL</a>
+      <a href="#programs" class="btn-outline">VIEW PROGRAMS</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">SCROLL<br>↓</div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-inner">
+    <span>STRENGTH</span><span>•</span><span>CONDITIONING</span><span>•</span><span>HII</span><span>•</span><span>BOXING</span><span>•</span><span>YOGA</span><span>•</span><span>CROSSFIT</span><span>•</span><span>RECOVERY</span><span>•</span><span>STRENGTH</span><span>•</span><span>CONDITIONING</span><span>•</span><span>HII</span><span>•</span><span>BOXING</span><span>•</span><span>YOGA</span><span>•</span><span>CROSSFIT</span><span>•</span><span>RECOVERY</span><span>•</span>
+  </div>
+</div>
+
+<section class="section" id="programs">
+  <div class="section-header"><h2>OUR <span>PROGRAMS</span></h2></div>
+  <div class="programs">
+    <div class="program"><div class="program-icon">🏋️</div><h3>Strength Lab</h3><p>Progressive overload training with periodized programming and form analysis.</p><div class="tag">Beginner Friendly</div></div>
+    <div class="program"><div class="program-icon">🥊</div><h3>Boxing Academy</h3><p>Technical striking, bag work, and conditioning inspired by pro fighters.</p><div class="tag">All Levels</div></div>
+    <div class="program"><div class="program-icon">🔥</div><h3>Inferno HIIT</h3><p>45-minute metabolic conditioning circuits that torch calories and build endurance.</p><div class="tag">Advanced</div></div>
+    <div class="program"><div class="program-icon">🧘</div><h3>Power Yoga</h3><p>Athletic yoga combining strength, flexibility, and mindfulness practices.</p><div class="tag">Recovery Day</div></div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat"><h3 data-target="5000">0</h3><p>MEMBERS</p></div>
+  <div class="stat"><h3 data-target="50">0</h3><p>CLASSES WEEKLY</p></div>
+  <div class="stat"><h3 data-target="12">0</h3><p>ELITE COACHES</p></div>
+  <div class="stat"><h3 data-target="98">0</h3><p>SATISFACTION %</p></div>
+</div>
+
+<section class="section" id="coaches">
+  <div class="section-header"><h2>MEET YOUR <span>COACHES</span></h2></div>
+  <div class="coaches">
+    <div class="coach"><div class="coach-img"><img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=200" alt="Coach"></div><h4>Marcus Steel</h4><div class="role">Head Coach</div></div>
+    <div class="coach"><div class="coach-img"><img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=200" alt="Coach"></div><h4>Sarah Chen</h4><div class="role">Yoga Instructor</div></div>
+    <div class="coach"><div class="coach-img"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=200" alt="Coach"></div><h4>James Reid</h4><div class="role">Boxing Coach</div></div>
+    <div class="coach"><div class="coach-img"><img src="https://images.unsplash.com/photo-1609899464926-209bc8e1b3f4?w=200" alt="Coach"></div><h4>Aisha Patel</h4><div class="role">HIIT Specialist</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header"><h2>WHAT MEMBERS <span>SAY</span></h2></div>
+  <div class="testimonials">
+    <div class="testimonial"><div class="stars">★★★★★</div><p>"Apex completely transformed my approach to fitness. The coaches genuinely care and the community keeps me accountable."</p><div class="name">— David K.</div></div>
+    <div class="testimonial"><div class="stars">★★★★★</div><p>"Lost 30 lbs in 4 months and gained confidence I never had. The Boxing Academy is incredible."</p><div class="name">— Maria L.</div></div>
+    <div class="testimonial"><div class="stars">★★★★★</div><p>"Best gym I've ever been to. Period. The programming is smart and the energy is unmatched."</p><div class="name">— Alex T.</div></div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>YOUR TRANSFORMATION STARTS NOW</h2>
+  <p>First week free. No contracts. Cancel anytime.</p>
+  <button class="btn-white">CLAIM YOUR FREE TRIAL</button>
+</section>
+
+<footer>&copy; 2026 Apex Fitness. Portfolio Demo.</footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50)});
+
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15});
+document.querySelectorAll('.program,.coach,.testimonial').forEach(c=>obs.observe(c));
+
+const sobs=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,t=+el.dataset.target;let c=0;const s=t/50;const iv=setInterval(()=>{c+=s;if(c>=t){el.textContent=t;clearInterval(iv)}else el.textContent=Math.floor(c)},25);sobs.unobserve(el)})},{threshold:.5});
+document.querySelectorAll('[data-target]').forEach(n=>sobs.observe(n));
+</script>
+</body>
+</html>
